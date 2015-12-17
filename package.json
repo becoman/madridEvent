@@ -1,0 +1,10 @@
+{
+  "name": "MadridEvents",
+  "version": "0.0.1",
+  "main":"server.js",
+  "dependencies":{
+    "mongoose": " 4.3.1",
+    "express": "4.13.3"
+  }
+}
+

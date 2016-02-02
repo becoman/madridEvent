@@ -17,7 +17,8 @@ var event=new mongoose.Schema({
     coordX: Number,
     coordY: Number,
     urlPlace: String,
-    city:String
+    city:String,
+    eventID:String,
 
 })
 

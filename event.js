@@ -11,7 +11,14 @@ var event=new mongoose.Schema({
     type: String,
     date: Date,
     description: String,
-    free: Boolean
+    free: Boolean,
+    url:String,
+    district:String,
+    coordX: Number,
+    coordY: Number,
+    urlPlace: String,
+    city:String
+
 })
 
-module.exports(mongoose.model("Event",event));
+module.exports=mongoose.model("Event",event);

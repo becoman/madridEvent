@@ -15,10 +15,67 @@ var options = {
 //utility
 
 var procesarContenido=function (element, index, array) {
-  console.dir(element);
+  var event= require("./../event");
+  for(i=0;i<element.getElementsByTagName("atributo");i++) {
+    var attrName=element.getElementsByTagName("atributo")[i].attributes[0].nodeValue;
+    var attrValue=element.getElementsByTagName("atributo")[i].childNodes[0].nodeValue;
+    switch(attrName){
+      case "TITULO":
+        event.title=attrValue;
+        break;
+      case "GRATUITO":
+        event.free=attrValue;
+        break;
+      case "DESCRIPCION":
+        event.content=attrValue;
+        break;
+      case "LOCALIZACION":
+        procesarLocalizacion (element.getElementsByTagName("atributo")[i].childNodes[0],event);
+        break;
+      case "TIPO":
+        event.type=attrValue.split("/").last;
+        break;
+      case "URL":
+          event.url=attrValue;
+       break;
+    }
+  }
+  
+  event.type=element.getElementsByTagName("tipo")[0].childNodes[0].nodeValue;
+  //var title=
   console.log("\n RRRRRRRRRR \n");
+  console.log(event);
+   throw "FIN";
 
 };
+
+var procesarLocalizacion= function (nodo, evento) {
+  for(i=0;i<nodo.getElementsByTagName("atributo");i++) {
+      var attrName=nodo.getElementsByTagName("atributo")[i].attributes[0].nodeValue;
+      var attrValue=nodo.getElementsByTagName("atributo")[i].childNodes[0].nodeValue;
+      switch (attrName) {
+        case "DISTRITO":
+            nodo.district=attrValue;
+            break;
+        case "NOMBRE-INSTALACION":
+          nodo.place=attrValue;
+          break;
+        case "LOCALIDAD":
+          nodo.city=attrValue;
+          break;
+        case "LATITUD":
+          nodo.coordX=attrValue;
+          break;
+        case "LONGITUD":
+            nodo.coordY=attrValue;
+            break;
+        case "CONTENT-URL-INSTALACION":
+            nodo.urlPlace=attrValue;
+            break;
+      }
+  }
+
+}
 
 
 var parse= function (text){

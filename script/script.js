@@ -2,6 +2,12 @@
 //var  xml2js = require('xml2js');
 var http = require('http');
 var DOMParser = require('xmldom').DOMParser;
+var mongoose=require("mongoose");
+
+mongoose.connect("mongodb://localhost/MadEvents", function (err, res) {
+    if(err) throw "Error Conexion BD "+err;
+    else console.log("Mongo Conectado");
+});
 
 
 //Declaration
@@ -15,7 +21,9 @@ var options = {
 //utility
 
 var procesarContenido=function (element, index, array) {
-  var event= require("./../event");
+  var Event= require("./../event");
+  var event=new Event();
+  console.log("Evento \n");
   for(i=0;i<element.getElementsByTagName("atributo");i++) {
     var attrName=element.getElementsByTagName("atributo")[i].attributes[0].nodeValue;
     var attrValue=element.getElementsByTagName("atributo")[i].childNodes[0].nodeValue;
@@ -40,12 +48,12 @@ var procesarContenido=function (element, index, array) {
        break;
     }
   }
-  
   event.type=element.getElementsByTagName("tipo")[0].childNodes[0].nodeValue;
-  //var title=
-  console.log("\n RRRRRRRRRR \n");
-  console.log(event);
-   throw "FIN";
+  event.save(function (err){
+      if(err) console.log("Error añadir evento "+err);
+      else
+          console.log(" Evento guardado "+event.title+" \n");
+  });
 
 };
 

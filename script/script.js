@@ -21,7 +21,7 @@ var options = {
 
 var procesarContenido=function (element, index, array) {
   var event=new Event();
-  //console.log("Evento \n");
+  //console.log(element.getElementsByTagName("atributo").length);
   for(i=0;i<element.getElementsByTagName("atributo").length;i++) {
     var attrName=element.getElementsByTagName("atributo")[i].attributes[0].nodeValue;
     var attrValue=element.getElementsByTagName("atributo")[i].childNodes[0].nodeValue;
@@ -40,7 +40,7 @@ var procesarContenido=function (element, index, array) {
         event.content=attrValue;
         break;
       case "LOCALIZACION":
-        procesarLocalizacion (element.getElementsByTagName("atributo")[i],event);
+        event=procesarLocalizacion (element.getElementsByTagName("atributo")[i],event);
         break;
       case "TIPO":
         event.type=attrValue.split("/").last;
@@ -51,7 +51,6 @@ var procesarContenido=function (element, index, array) {
     }
   }
   event.type=element.getElementsByTagName("tipo")[0].childNodes[0].nodeValue;
-  console.log(" Evento guardado "+event.title+" \n");
   //throw("FIN");
   //if(!updateOrInsert(event)) {
     event.save(function (err){
@@ -72,32 +71,34 @@ var updateOrInsert=function (evento) {
 };
 
 var procesarLocalizacion= function (nodo, evento) {
-
-  for(i=0;i<nodo.getElementsByTagName("atributo").length;i++) {
-      var attrName=nodo.getElementsByTagName("atributo")[i].attributes[0].nodeValue;
-      var attrValue=nodo.getElementsByTagName("atributo")[i].childNodes[0].nodeValue;
+  console.log(nodo.getElementsByTagName("atributo").length);
+  for(a=0;a<nodo.getElementsByTagName("atributo").length;a++) {
+      var attrName=nodo.getElementsByTagName("atributo")[a].attributes[0].nodeValue;
+      var attrValue=nodo.getElementsByTagName("atributo")[a].childNodes[0].nodeValue;
     //  console.log(attrName+"\n");
       switch (attrName) {
         case "DISTRITO":
-            nodo.district=attrValue;
+            evento.district=attrValue;
             break;
         case "NOMBRE-INSTALACION":
-          nodo.place=attrValue;
+          evento.place=attrValue;
           break;
         case "LOCALIDAD":
-          nodo.city=attrValue;
+          evento.city=attrValue;
           break;
         case "LATITUD":
-          nodo.coordX=attrValue;
+          evento.coordX=attrValue;
           break;
         case "LONGITUD":
-            nodo.coordY=attrValue;
+            evento.coordY=attrValue;
             break;
         case "CONTENT-URL-INSTALACION":
-            nodo.urlPlace=attrValue;
+            evento.urlPlace=attrValue;
             break;
       }
   }
+
+  return evento;
 
 };
 

@@ -4,15 +4,13 @@
 var express=require("express");
 var mongoose=require("mongoose");
 var app=express();
-
-mongoose.connect("mongodb://localhost/MadEvents", function (err, res) {
+var database = require('./config/database');
+mongoose.connect(database.url, function (err, res) {
     if(err) console.log("Error Conexion BD "+err);
     else console.log("Mongo Conectado");
 });
 
-app.get("/",function (req,res){
-    res.send("Hola mundo");
-});
+require('./app/routes')(app);
 
-app.listen(5000)
+app.listen(5000);
 console.log("Servidor Corriendo en el puerto 5000");

@@ -4,7 +4,8 @@ var http = require('http');
 var DOMParser = require('xmldom').DOMParser;
 var mongoose=require("mongoose");
 var Event= require("./../event");
-var db=mongoose.connect("mongodb://localhost/MadEvents", function (err, res) {
+var database = require('./config/database');
+var db=mongoose.connect(database.url, function (err, res) {
     if(err) throw( "Error Conexion BD "+err);
     else console.log("Mongo Conectado");
 });

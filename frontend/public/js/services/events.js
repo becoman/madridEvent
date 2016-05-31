@@ -1,5 +1,5 @@
 // js/services/todos.js
-angular.module('todoService', [])
+angular.module('eventService', [])
 
     // super simple service
     // each function returns a promise object
